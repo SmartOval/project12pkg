@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # project12pkg
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/SmartOval/project12pkg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SmartOval/project12pkg/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/SmartOval/project12pkg/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/SmartOval/project12pkg/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
 The goal of project12pkg is to ...
@@ -25,7 +27,7 @@ The goal of project12pkg is to ...
 You can install the development version of project12pkg like so:
 
 ``` r
-remotes::install_github("SmartOval/ADS8192")
+remotes::install_github("SmartOval/project12pkg")
 
 ```
 
