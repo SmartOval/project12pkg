@@ -16,3 +16,5 @@ Imports:
     scRNAseq,
     SingleCellExperiment,
     usethis
+URL: https://github.com/SmartOval/project12pkg
+BugReports: https://github.com/SmartOval/project12pkg/issues
