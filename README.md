@@ -1,0 +1,81 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# project12pkg
+
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/SmartOval/project12pkg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SmartOval/project12pkg/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/SmartOval/project12pkg/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/SmartOval/project12pkg/actions/workflows/pkgdown.yaml)
+<!-- badges: end -->
+
+## Overview
+
+`project12pkg` provides a modular workflow for identifying and
+visualizing marker genes from single-cell RNA-seq data.
+
+The package allows you to:
+
+- Filter low-expression genes based on detection rate  
+- Perform one-vs-rest statistical testing per cell type  
+- Compute log2 fold changes, Wilcoxon p-values, and BH-adjusted
+  p-values  
+- Identify top marker genes for each cell type  
+- Summarize significant markers across groups  
+- Visualize marker genes using an interpretable dot plot  
+- Export marker results and summaries to TSV files
+
+The package is designed to work with `SingleCellExperiment` objects.
+
+## Installation
+
+You can install the development version from GitHub:
+
+``` r
+remotes::install_github("SmartOval/project12pkg")
+```
+
+## Example
+
+Below is a complete example workflow using the included dataset:
+
+``` r
+library(project12pkg)
+
+data("example_sce", package = "project12pkg")
+
+sce_filt <- filter_genes(example_sce)
+mat_norm <- normalize_counts(sce_filt)
+all_markers <- find_markers(sce_filt, mat_norm)
+
+top_markers <- select_top_markers(all_markers, n_markers = 5)
+marker_summary <- summarize_markers(all_markers)
+
+cell_type <- SummarizedExperiment::colData(sce_filt)[["label"]]
+plot_df <- build_dotplot(all_markers, top_markers, mat_norm, cell_type)
+
+plot_markers(plot_df)
+```
+
+## Output
+
+The package produces:
+
+- A full marker gene table with statistics for each cell type  
+- A summary table of significant markers  
+- A dot plot showing:
+  - Gene expression (color)
+  - Detection rate (size)
+  - Cell type (x-axis)
+  - Marker genes (y-axis)
+
+You can also export results to files:
+
+``` r
+export_markers(all_markers, marker_summary, "output_dir")
+```
+
+## Notes
+
+- The included dataset (`example_sce`) is derived from the Baron mouse
+  pancreas dataset.
