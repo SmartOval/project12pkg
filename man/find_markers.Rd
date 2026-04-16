@@ -9,7 +9,9 @@ find_markers(sce, mat_norm, group_col = "label")
 \arguments{
 \item{sce}{A SingleCellExperiment object.}
 
-\item{min_detect_rate}{Minimum fraction of cells in which a gene must be detected.}
+\item{mat_norm}{A normalized expression matrix.}
+
+\item{group_col}{Column name in \code{colData(sce)} containing cell type labels.}
 }
 \value{
 A filtered SingleCellExperiment object.

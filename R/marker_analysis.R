@@ -42,8 +42,8 @@ normalize_counts <- function(sce) {
 #' Filter genes by detection rate
 #'
 #' @param sce A SingleCellExperiment object.
-#' @param min_detect_rate Minimum fraction of cells in which a gene must be detected.
-#'
+#' @param mat_norm A normalized expression matrix.
+#' @param group_col Column name in \code{colData(sce)} containing cell type labels.
 #' @return A filtered SingleCellExperiment object.
 #' @export
 find_markers <- function(sce, mat_norm, group_col = "label") {
@@ -72,7 +72,7 @@ find_markers <- function(sce, mat_norm, group_col = "label") {
 
     # Wilcoxon rank-sum test (subset of genes for speed)
     pvals <- sapply(seq_len(nrow(mat_norm)), function(i) {
-      wilcox.test(mat_norm[i, is_target], mat_norm[i, !is_target],
+      stats::wilcox.test(mat_norm[i, is_target], mat_norm[i, !is_target],
                   alternative = "greater")$p.value
     })
 
@@ -83,7 +83,7 @@ find_markers <- function(sce, mat_norm, group_col = "label") {
       detect_target = detect_target,
       detect_rest  = detect_rest,
       pvalue       = pvals,
-      padj         = p.adjust(pvals, method = "BH"),
+      padj         = stats::p.adjust(pvals, method = "BH"),
       stringsAsFactors = FALSE
     )
   })
@@ -111,6 +111,6 @@ select_top_markers <- function(all_markers, n_markers = 5) {
   do.call(rbind, lapply(cell_types, function(ct) {
     sub <- all_markers[all_markers$cell_type == ct, ]
     sub <- sub[order(sub$log2fc, decreasing = TRUE), ]
-    head(sub, n_markers)
+    utils::head(sub, n_markers)
   }))
 }

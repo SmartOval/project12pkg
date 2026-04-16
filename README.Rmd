@@ -20,38 +20,70 @@ knitr::opts_chunk$set(
 [![pkgdown](https://github.com/SmartOval/project12pkg/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/SmartOval/project12pkg/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
-The goal of project12pkg is to ...
+## Overview
+
+`project12pkg` provides a modular workflow for identifying and visualizing marker genes from single-cell RNA-seq data.
+
+The package allows you to:
+
+- Filter low-expression genes based on detection rate  
+- Perform one-vs-rest statistical testing per cell type  
+- Compute log2 fold changes, Wilcoxon p-values, and BH-adjusted p-values  
+- Identify top marker genes for each cell type  
+- Summarize significant markers across groups  
+- Visualize marker genes using an interpretable dot plot  
+- Export marker results and summaries to TSV files  
+
+The package is designed to work with `SingleCellExperiment` objects.
 
 ## Installation
 
-You can install the development version of project12pkg like so:
+You can install the development version from GitHub:
 
-``` r
+```r
 remotes::install_github("SmartOval/project12pkg")
-
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Below is a complete example workflow using the included dataset:
 
-```{r example}
+```r
 library(project12pkg)
-## basic example code
+
+data("example_sce", package = "project12pkg")
+
+sce_filt <- filter_genes(example_sce)
+mat_norm <- normalize_counts(sce_filt)
+all_markers <- find_markers(sce_filt, mat_norm)
+
+top_markers <- select_top_markers(all_markers, n_markers = 5)
+marker_summary <- summarize_markers(all_markers)
+
+cell_type <- SummarizedExperiment::colData(sce_filt)[["label"]]
+plot_df <- build_dotplot(all_markers, top_markers, mat_norm, cell_type)
+
+plot_markers(plot_df)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Output
 
-```{r cars}
-summary(cars)
+The package produces:
+
+- A full marker gene table with statistics for each cell type  
+- A summary table of significant markers  
+- A dot plot showing:
+  - Gene expression (color)
+  - Detection rate (size)
+  - Cell type (x-axis)
+  - Marker genes (y-axis)
+
+You can also export results to files:
+
+```r
+export_markers(all_markers, marker_summary, "output_dir")
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+## Notes
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+- The included dataset (`example_sce`) is derived from the Baron mouse pancreas dataset.  

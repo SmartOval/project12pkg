@@ -1,3 +1,5 @@
+utils::globalVariables(c("cell_type", "gene", "detect_target", "mean_expr"))
+
 #' Builds a data frame of all genes and their markers to be plotted
 #'
 #' @param all_markers A DataFrame of all cells including genes, and cell-type.

@@ -9,7 +9,7 @@ test_that("normalize_counts returns matrix with correct dimensions", {
 })
 
 test_that("find markers errors on invalid group column", {
-  data("example_sce", pacakge = "project12pkg")
+  data("example_sce", package = "project12pkg")
 
   sce_filt <- filter_genes(example_sce)
   mat_norm <- normalize_counts(sce_filt)

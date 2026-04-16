@@ -1,5 +1,5 @@
 Package: project12pkg
-Title: ABDS tool to summarize the top N markers per group, compute overlap counts between groups, and visualizes results on a dot plot.
+Title: ABDS tool to summarize the top N markers per group, compute overlap counts between groups, and visualizes results on a dot plot
 Version: 0.0.0.9000
 Authors@R: 
     person("Nobel", "Makonnen", , "Nobel.Makonnen@stjude.org", role = c("aut", "cre"))
@@ -11,13 +11,16 @@ RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
 LazyData: true
-Imports: 
+LazyDataCompression: xz
+Imports:
     ggplot2,
-    scRNAseq,
+    Matrix,
     SingleCellExperiment,
-    usethis
+    SummarizedExperiment,
+    stats,
+    utils
 URL: https://github.com/SmartOval/project12pkg
 BugReports: https://github.com/SmartOval/project12pkg/issues
-Suggests: 
+Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
