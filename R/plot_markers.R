@@ -1,9 +1,17 @@
+#' Builds a data frame of all genes and their markers to be plotted
+#'
+#' @param all_markers A DataFrame of all cells including genes, and cell-type.
+#' @param top_markers A DataFrame of the top markers per gene
+#' @param mat_norm Large dgeMatrix of the normalized counts of the SingleCellExperiment object
+#' @param cell_type A dataframe of the filtered genes and all of their respective cell types
+#' @return A dataframe of each filtered gene, ordered by cell type.
+#' @export
 build_dotplot <- function(all_markers, top_markers, mat_norm, cell_type) {
   if (!is.data.frame(all_markers) || !is.data.frame(top_markers)) {
     stop("`all_markers` and `top_markers` must be data.frames.")
   }
   gene_levels <- unique(as.character(top_markers$gene))
-  ct_levels   <- as.character(cell_types)
+  ct_levels   <- unique(as.character(cell_type))
   plot_df <- all_markers[all_markers$gene %in% gene_levels, ]
 
   # Add mean expression per (gene, cell_type) combination
@@ -17,17 +25,31 @@ build_dotplot <- function(all_markers, top_markers, mat_norm, cell_type) {
 }
 
 
-
+#' Plots genes and their markers
+#'
+#' @param plot_df A dataframe of all filtered genes
+#' @return A ggplot dotplot of the plot_df data Frame
+#' @export
 plot_markers <- function(plot_df) {
   if (!is.data.frame(plot_df)) {
-    stop("`plot_df` must be a data.Frame.")
+    stop("`plot_df` must be a data.frame.")
   }
-  ggplot2:ggplot(plot_df, aes(x = cell_type, y = gene,
-                      size = detect_target, color = mean_expr)) +
+
+  ggplot2::ggplot(
+    plot_df,
+    ggplot2::aes(
+      x = cell_type,
+      y = gene,
+      size = detect_target,
+      color = mean_expr
+    )
+  ) +
     ggplot2::geom_point() +
     ggplot2::scale_size_continuous(range = c(1, 6), name = "Detection Rate") +
     ggplot2::scale_color_viridis_c(name = "Mean Expression") +
     ggplot2::theme_bw(base_size = 12) +
-    ggplot2::theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+    ) +
     ggplot2::labs(title = "Top Marker Genes per Cell Type")
 }
