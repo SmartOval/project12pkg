@@ -79,3 +79,4 @@ export_markers(all_markers, marker_summary, "output_dir")
 
 - The included dataset (`example_sce`) is derived from the Baron mouse
   pancreas dataset.
+- ChatGPT was utilized to make this README look more nice
