@@ -1,0 +1,79 @@
+---
+title: "Getting Started with the Project 12 Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+# Loading the Data
+library(project12pkg)
+data("example_sce", package = "project12pkg")
+sce <- example_sce
+sce
+```
+
+```{r}
+#First, filter and remove the low expression genes that are detected in less than 5% of the cells from the dataset
+sce_filt <- filter_genes(sce, min_detect_rate = 0.05)
+sce_filt
+```
+
+```{r}
+#Next, compute log-normalized counts
+mat_norm <- normalize_counts(sce_filt)
+dim(mat_norm)
+```
+
+```{r}
+# Perform one-vs-rest statistical testing for each cell type.
+all_markers <- find_markers(sce_filt, mat_norm)
+head(all_markers)
+```
+
+
+```{r}
+#Next, extract the top markers from each cell type.
+top_markers <- select_top_markers(all_markers, n_markers = 5)
+top_markers
+
+```
+
+
+```{r}
+#Computer summary statistics across cell types
+marker_summary <- summarize_markers(all_markers)
+marker_summary
+```
+
+```{R}
+# Build a marker plot where color = mean expression, and size = detection rate
+cell_type <- SummarizedExperiment::colData(sce_filt)[["label"]]
+
+plot_df <- build_dotplot(all_markers, top_markers, mat_norm, cell_type)
+
+plot_markers(plot_df)
+```
+
+
+```{r}
+#Finally, export the results
+output_dir <- tempdir()
+export_markers(all_markers, marker_summary, output_dir)
+
+list.files(output_dir)
+
+```
+
+
+
+

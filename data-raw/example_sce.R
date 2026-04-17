@@ -2,7 +2,7 @@ library(scRNAseq)
 library(SingleCellExperiment)
 library(usethis)
 library(ggplot2)
-sce <- sce <- BaronPancreasData("mouse")
+sce <- BaronPancreasData("mouse")
 example_sce <- sce
 
 data("example_sce", package = "project12pkg")

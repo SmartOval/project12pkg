@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# project12pkg
+# Project 12 Package
 
 <!-- badges: start -->
 
@@ -11,19 +11,18 @@
 
 ## Overview
 
-`project12pkg` provides a modular workflow for identifying and
-visualizing marker genes from single-cell RNA-seq data.
+`project12pkg` is a tool for identifying and visualizing marker genes
+from single-cell RNA-seq data.
 
-The package allows you to:
+The package will allow you to:
 
-- Filter low-expression genes based on detection rate  
+- Filter low-expression genes based on a designated detection rate  
 - Perform one-vs-rest statistical testing per cell type  
-- Compute log2 fold changes, Wilcoxon p-values, and BH-adjusted
-  p-values  
+- Compute log2 fold changes, Wilcoxon p-values, and Adjusted p-values  
 - Identify top marker genes for each cell type  
-- Summarize significant markers across groups  
-- Visualize marker genes using an interpretable dot plot  
-- Export marker results and summaries to TSV files
+- Summarize top markers across cell types  
+- Visualize marker genes using a dot plot  
+- Export marker results and summaries to tsv files
 
 The package is designed to work with `SingleCellExperiment` objects.
 
