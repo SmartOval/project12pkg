@@ -7,7 +7,19 @@
 
 [![R-CMD-check](https://github.com/SmartOval/project12pkg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SmartOval/project12pkg/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/SmartOval/project12pkg/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/SmartOval/project12pkg/actions/workflows/pkgdown.yaml)
-<!-- badges: end -->
+<!-- badges: end --> \## Command-Line Interface
+
+This package includes a Rapp-based command-line interface for running
+the marker gene workflow from a terminal.
+
+### During development
+
+Run the CLI directly with `Rapp`:
+
+``` bash
+Rapp exec/project12pkg.R --help
+Rapp exec/project12pkg.R run --help
+```
 
 ## Overview
 
