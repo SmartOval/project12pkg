@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^project12pkg\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$

@@ -5,6 +5,6 @@ account: smartoval
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 17165658
-bundleId: 11871892
+bundleId: 11879360
 url: https://smartoval.shinyapps.io/project12pkg/
 version: 1

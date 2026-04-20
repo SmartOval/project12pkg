@@ -62,28 +62,36 @@ run_app <- function() {
       )
     )
   server <- function(input, output, session) {
-    example_sce_obj <- get("example_sce", envir = asNamespace("project12pkg"))
+    data_path <- file.path("data", "example_sce.rda")
+
+    if (!file.exists(data_path)) {
+      stop("example_sce.rda was not found in the app data directory.")
+    }
+
+    e <- new.env(parent = emptyenv())
+    load(data_path, envir = e)
+    example_sce_obj <- e$example_sce
 
     analysis_results <- shiny::reactive({
       shiny::validate(
         shiny::need(input$n_markers >= 1, "Number of Markers must be at least 1")
       )
 
-      withProgress(message = "Running marker analysis... (This may take a bit)", value = 0, {
-        incProgress(0.2)
+      shiny::withProgress(message = "Running marker analysis... (This may take a bit)", value = 0, {
+        shiny::incProgress(0.2)
         sce_filt <- filter_genes(example_sce_obj, min_detect_rate = input$min_detect_rate)
 
-        incProgress(0.2)
+        shiny::incProgress(0.2)
         mat_norm <- normalize_counts(sce_filt)
 
-        incProgress(0.3)
+        shiny::incProgress(0.3)
         all_markers <- find_markers(sce_filt, mat_norm, group_col = "label")
 
-        incProgress(0.1)
+        shiny::incProgress(0.1)
         top_markers <- select_top_markers(all_markers, n_markers = input$n_markers)
         marker_summary <- summarize_markers(all_markers)
 
-        incProgress(0.2)
+        shiny::incProgress(0.2)
         cell_type <- SummarizedExperiment::colData(sce_filt)[["label"]]
         plot_df <- build_dotplot(all_markers, top_markers, mat_norm, cell_type)
 
