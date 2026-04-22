@@ -21,3 +21,23 @@ A dataframe of each filtered gene, ordered by cell type.
 \description{
 Builds a data frame of all genes and their markers to be plotted
 }
+\examples{
+\dontrun{
+# Load example data
+data(example_se)
+
+# We should assume preprocessing functions were run earlier
+# all_markers <- find_all_markers(example_se)
+# top_markers <- get_top_markers(all_markers)
+# mat_norm <- get_normalized_matrix(example_se)
+# cell_type <- colData(example_se)$cell_type
+
+# Build dotplot dataframe
+plot_df <- build_dotplot(
+  all_markers = all_markers,
+  top_markers = top_markers,
+  mat_norm = mat_norm,
+  cell_type = cell_type
+)
+}
+}

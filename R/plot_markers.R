@@ -1,12 +1,29 @@
-utils::globalVariables(c("cell_type", "gene", "detect_target", "mean_expr"))
-
 #' Builds a data frame of all genes and their markers to be plotted
-#'
+
 #' @param all_markers A DataFrame of all cells including genes, and cell-type.
 #' @param top_markers A DataFrame of the top markers per gene
 #' @param mat_norm Large dgeMatrix of the normalized counts of the SingleCellExperiment object
 #' @param cell_type A dataframe of the filtered genes and all of their respective cell types
 #' @return A dataframe of each filtered gene, ordered by cell type.
+#' @examples
+#' \dontrun{
+#' # Load example data
+#' data(example_se)
+#'
+#' # We should assume preprocessing functions were run earlier
+#' # all_markers <- find_all_markers(example_se)
+#' # top_markers <- get_top_markers(all_markers)
+#' # mat_norm <- get_normalized_matrix(example_se)
+#' # cell_type <- colData(example_se)$cell_type
+#'
+#' # Build dotplot dataframe
+#' plot_df <- build_dotplot(
+#'   all_markers = all_markers,
+#'   top_markers = top_markers,
+#'   mat_norm = mat_norm,
+#'   cell_type = cell_type
+#' )
+#' }
 #' @export
 build_dotplot <- function(all_markers, top_markers, mat_norm, cell_type) {
   if (!is.data.frame(all_markers) || !is.data.frame(top_markers)) {
@@ -30,7 +47,18 @@ build_dotplot <- function(all_markers, top_markers, mat_norm, cell_type) {
 #' Plots genes and their markers
 #'
 #' @param plot_df A dataframe of all filtered genes
-#' @return A ggplot dotplot of the plot_df data Frame
+#' @return A ggplot dotplot of the plot_df data frame
+#' @examples
+#' \dontrun{
+#' data(example_se)
+#'
+#' # Example workflow
+#' # plot_df <- build_dotplot(...)
+#'
+#' # Plot markers
+#' plot_markers(plot_df)
+#' }
+#' @importFrom rlang .data
 #' @export
 plot_markers <- function(plot_df) {
   if (!is.data.frame(plot_df)) {
@@ -40,10 +68,10 @@ plot_markers <- function(plot_df) {
   ggplot2::ggplot(
     plot_df,
     ggplot2::aes(
-      x = cell_type,
-      y = gene,
-      size = detect_target,
-      color = mean_expr
+      x = .data[["cell_type"]],
+      y = .data[["gene"]],
+      size = .data[["detect_target"]],
+      color = .data[["mean_expr"]]
     )
   ) +
     ggplot2::geom_point() +

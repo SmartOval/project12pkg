@@ -15,3 +15,9 @@ A normalized SingleCellExperiment object.
 \description{
 Normalize gene counts
 }
+\examples{
+\dontrun{
+data(example_sce)
+mat_norm <- normalize_counts(example_sce)
+}
+}

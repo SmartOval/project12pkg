@@ -19,3 +19,11 @@ A dataframe with all distinct cell types with their total markers and top marker
 \description{
 Summary: overlap counts between groups
 }
+\examples{
+\dontrun{
+data(example_se)
+
+# Example
+# marker_summary <- summarize_markers(...)
+}
+}

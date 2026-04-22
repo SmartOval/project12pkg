@@ -17,3 +17,9 @@ A filtered SingleCellExperiment object.
 \description{
 Filter genes by detection rate
 }
+\examples{
+\dontrun{
+data(example_sce)
+sce_filtered <- filter_genes(example_sce, min_detect_rate = 0.05)
+}
+}

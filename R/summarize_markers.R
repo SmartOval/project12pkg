@@ -4,6 +4,13 @@
 #' @param padj_cutoff A value for the desired cut off for the p-adjusted value
 #' @param log2fc_cutoff A value for the desired cut off for the log2fc value.
 #' @return A dataframe with all distinct cell types with their total markers and top marker.
+#' @examples
+#' \dontrun{
+#' data(example_se)
+#'
+#' # Example
+#' # marker_summary <- summarize_markers(...)
+#' }
 #' @export
 summarize_markers <- function(all_markers, padj_cutoff = 1, log2fc_cutoff = 1) {
   if (!is.data.frame(all_markers)) {

@@ -10,8 +10,19 @@ plot_markers(plot_df)
 \item{plot_df}{A dataframe of all filtered genes}
 }
 \value{
-A ggplot dotplot of the plot_df data Frame
+A ggplot dotplot of the plot_df data frame
 }
 \description{
 Plots genes and their markers
+}
+\examples{
+\dontrun{
+data(example_se)
+
+# Example workflow
+# plot_df <- build_dotplot(...)
+
+# Plot markers
+plot_markers(plot_df)
+}
 }

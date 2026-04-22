@@ -2,8 +2,12 @@
 #'
 #' @param sce A SingleCellExperiment object.
 #' @param min_detect_rate Minimum fraction of cells in which a gene must be detected.
-#'
 #' @return A filtered SingleCellExperiment object.
+#' @examples
+#' \dontrun{
+#' data(example_sce)
+#' sce_filtered <- filter_genes(example_sce, min_detect_rate = 0.05)
+#' }
 #' @export
 filter_genes <- function(sce, min_detect_rate = 0.05){
   if (!inherits(sce, "SingleCellExperiment")) {
@@ -20,10 +24,14 @@ filter_genes <- function(sce, min_detect_rate = 0.05){
 }
 
 #' Normalize gene counts
-#'
+
 #' @param sce A SingleCellExperiment object.
-#'
 #' @return A normalized SingleCellExperiment object.
+#' @examples
+#' \dontrun{
+#' data(example_sce)
+#' mat_norm <- normalize_counts(example_sce)
+#' }
 #' @export
 normalize_counts <- function(sce) {
   if (!inherits(sce, "SingleCellExperiment")) {
@@ -39,12 +47,18 @@ normalize_counts <- function(sce) {
   log2(Matrix::t(Matrix::t(counts_mat) / lib_sizes * 1e6) + 1)
 }
 
-#' Filter genes by detection rate
+#' Find Marker genes for each cell type
 #'
 #' @param sce A SingleCellExperiment object.
 #' @param mat_norm A normalized expression matrix.
 #' @param group_col Column name in \code{colData(sce)} containing cell type labels.
-#' @return A filtered SingleCellExperiment object.
+#' @return A data.frame of marker statistics for each gene and cell type.
+#' @examples
+#' \dontrun{
+#' data(example_sce)
+#' mat_norm <- normalize_counts(example_sce)
+#' all_markers <- find_markers(example_sce, mat_norm, group_col = "label")
+#' }
 #' @export
 find_markers <- function(sce, mat_norm, group_col = "label") {
   if (!inherits(sce, "SingleCellExperiment")) {
@@ -99,6 +113,13 @@ find_markers <- function(sce, mat_norm, group_col = "label") {
 #' @param n_markers Preferred number of markers.
 #'
 #' @return A cell_types object with inputted number of top markers per cell types.
+#' @examples
+#' \dontrun{
+#' data(example_sce)
+#' mat_norm <- normalize_counts(example_sce)
+#' all_markers <- find_markers(example_sce, mat_norm, group_col = "label")
+#' top_markers <- select_top_markers(all_markers, n_markers = 5)
+#' }
 #' @export
 select_top_markers <- function(all_markers, n_markers = 5) {
   if (!is.data.frame(all_markers)) {

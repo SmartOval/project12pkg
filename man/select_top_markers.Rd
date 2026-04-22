@@ -17,3 +17,11 @@ A cell_types object with inputted number of top markers per cell types.
 \description{
 Select top N markers per cell type
 }
+\examples{
+\dontrun{
+data(example_sce)
+mat_norm <- normalize_counts(example_sce)
+all_markers <- find_markers(example_sce, mat_norm, group_col = "label")
+top_markers <- select_top_markers(all_markers, n_markers = 5)
+}
+}

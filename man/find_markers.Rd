@@ -2,7 +2,7 @@
 % Please edit documentation in R/marker_analysis.R
 \name{find_markers}
 \alias{find_markers}
-\title{Filter genes by detection rate}
+\title{Find Marker genes for each cell type}
 \usage{
 find_markers(sce, mat_norm, group_col = "label")
 }
@@ -14,8 +14,15 @@ find_markers(sce, mat_norm, group_col = "label")
 \item{group_col}{Column name in \code{colData(sce)} containing cell type labels.}
 }
 \value{
-A filtered SingleCellExperiment object.
+A data.frame of marker statistics for each gene and cell type.
 }
 \description{
-Filter genes by detection rate
+Find Marker genes for each cell type
+}
+\examples{
+\dontrun{
+data(example_sce)
+mat_norm <- normalize_counts(example_sce)
+all_markers <- find_markers(example_sce, mat_norm, group_col = "label")
+}
 }
