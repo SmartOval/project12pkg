@@ -7,3 +7,7 @@
 ^\.github$
 ^data-raw$
 ^docs$
+^dev_script\.R$
+^^\.*\\.bak$$
+^rsconnect$
+^app\.R$
